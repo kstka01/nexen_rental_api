@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nexentire.rental.re.dao.RTREExportClosingDAO">
+	<resultMap id="resMap" type="com.nexentire.rental.re.vo.RTREExportClosingVO">
+		<result property="rqstDay" column="RQST_DAY" jdbcType="NVARCHAR" javaType="String"/> 
+		<result property="fileNm" column="FILE_NM" jdbcType="NVARCHAR" javaType="String"/>
+		<result property="rowSeq" column="ROW_SEQ" jdbcType="NVARCHAR" javaType="String"/>
+		<result property="fileTp" column="FILE_TP" jdbcType="NVARCHAR" javaType="String"/>
+		<result property="fileSeq" column="FILE_SEQ" jdbcType="NVARCHAR" javaType="String"/>
+		<result property="rowData" column="ROW_DATA" jdbcType="NVARCHAR" javaType="String"/>
+	</resultMap>
+	<select id="getSndRcvList_1" statementType="CALLABLE" parameterType="com.nexentire.rental.re.vo.RTREExportClosingVO">
+		<![CDATA[
+			{CALL Pkg_Rtre0098.p_sRtre0098(
+				#{sndRcvList, mode=OUT, jdbcType=CURSOR, javaType=java.sql.ResultSet, resultMap=resMap},
+				#{rqstDay, jdbcType=VARCHAR},
+				#{fileNm, jdbcType=VARCHAR},
+				#{rowSeq, jdbcType=VARCHAR},
+				#{fileTp, jdbcType=VARCHAR},
+				#{fileSeq, jdbcType=VARCHAR},
+				#{rowData, jdbcType=VARCHAR},
+				#{delYn, jdbcType=VARCHAR},
+				#{regId, jdbcType=VARCHAR}			
+			)}
+		]]>
+	</select>
+	
+	<select id="getSndRcvList" parameterType="HashMap" resultMap="resMap">
+		<![CDATA[
+			SELECT RQST_DAY,
+			       FILE_NM,
+			       ROW_SEQ,
+			       FILE_TP,
+			       FILE_SEQ,
+			       ROW_DATA
+			FROM (
+				SELECT  ROW_NUMBER() OVER(ORDER BY ROW_SEQ) AS ROW_NUM,
+				        A.RQST_DAY,                  /*요청일자            */
+			            A.FILE_NM,                   /*파일명              */
+			            A.ROW_SEQ,                   /*ROW 순번            */
+			            A.FILE_TP,                   /*송수신 파일구분     */
+			            A.FILE_SEQ,                  /*파일 순번           */
+			            A.ROW_DATA                   /*파일내용            */
+			    FROM    NXRADMIN.RTRE0098 A
+			    WHERE   A.RQST_DAY = #{rqstDay}
+			    AND     A.FILE_NM  = DECODE(#{fileNm} , NULL, A.FILE_NM , #{fileNm})
+			    AND     A.FILE_TP  = DECODE(#{fileTp} , NULL, A.FILE_TP , #{fileTp})
+			    AND     A.DEL_YN   = 'N'
+			    ORDER   BY A.RQST_DAY, A.FILE_NM, A.ROW_SEQ
+		    )
+		]]>
+		
+	    <if test="firstRecordIndex !=null and lastRecordIndex != null">
+           WHERE ROW_NUM BETWEEN #{firstRecordIndex} AND #{lastRecordIndex}
+       	</if>
+		
+	</select>
+	
+	<select id="getSndRcvTotCount" resultType="Integer" parameterType="com.nexentire.rental.re.vo.RTREExportClosingVO">
+		SELECT 
+		 	COUNT(*) 
+		FROM NXRADMIN.RTRE0098
+		WHERE RQST_DAY = #{rqstDay}
+		AND FILE_TP = #{fileTp}
+		AND FILE_NM = #{fileNm}
+	</select>
+</mapper>

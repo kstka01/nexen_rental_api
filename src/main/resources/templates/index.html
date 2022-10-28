@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+	<form name="closingInfo" method="POST">
+		<div>
+			<ol>
+				<li><input type="text" id="rqstDay" value="" onkeyup="javascript:fn_makeFileNm(this);"/></li>
+				<li><input type="text" id="fileNm" data-file-name="KCP_BATCH_FILE_BC02_INX_V5407_" value="KCP_BATCH_FILE_BC02_INX_V5407_"/></li>
+				<li><input type="text" id="fileTp" value="BC02_INX"/></li>
+				<li><input type="text" id="crlfYn" value="Y"/></li>
+				<li><input type="text" id="delYn" value="N"/></li>
+				<li><input type="text" id="rowSeq" value=""/></li>
+				<li><input type="text" id="gubun" value="BC02_INX"/></li>
+			</ol>
+		</div>
+		
+		<input type="hidden" id="accessToken" value=""/>
+	</form>
+	<div><input type="button" value="토큰생성" onclick="javascript:fn_getToken()"/></div>
+	<div><input type="button" value="incommingTest" onclick="javascript:fn_run()"/></div>
+	
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript">
+		function fn_getToken(){
+			
+			var data = { "id" : "kstka" };
+			
+			$.ajax({
+				type: "POST",
+				url: "http://localhost:18080/api/authenticate.do",
+				data: JSON.stringify(data),
+				headers:{
+		            "Content-Type": "application/json"
+		        },
+				success: function(data){
+					var obj = JSON.parse(data);					
+					document.getElementById("accessToken").value = obj.accessToken;
+				},
+				error:function(request, status, error){
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			})
+		}
+		
+		function fn_run(){
+			
+			var accessToken = document.getElementById("accessToken").value;
+			
+			$.ajax({
+				type: "POST",
+				url: "http://localhost:18080/api/incommingTest.do",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + accessToken
+				},
+				success: function(data){
+					alert(data);
+				},
+				error:function(request, status, error){
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			})
+		}
+		
+		function fn_makeFileNm(obj){
+			document.getElementById("fileNm").value = document.getElementById("fileNm").dataset.fileName + obj.value;
+		}
+		
+	</script>
+</body>
+</html>
