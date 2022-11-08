@@ -10,4 +10,6 @@ public class NexenConstants {
 	
 	public final static String SEPERATOR = "\\";
 	public final static String HTTP_SEPERATOR = "/";
+	
+	public final static String LOCAL = "127.0.0.1";
 }

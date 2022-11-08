@@ -15,7 +15,6 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.nexentire.rental.util.jwt.JwtTokenUtil;
@@ -33,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		
 		try {
 			
-			String token = parseBearerToken(request);
+			String token = tokenUtil.parseBearerToken(request);
 			
 			if(token != null && !token.equalsIgnoreCase("null")) {
 				String userId = tokenUtil.validateAndgetUserId(token);
@@ -50,18 +49,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			System.out.println(e.getMessage());
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
 		}
+		
 		filterChain.doFilter(request, response);
 
-	}
-	
-	private String parseBearerToken(HttpServletRequest request) {
-		
-		String bearerToken = request.getHeader("Authorization");
-		
-		if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
-			return bearerToken.substring(7);
-		}
-		return null;
 	}
 
 }

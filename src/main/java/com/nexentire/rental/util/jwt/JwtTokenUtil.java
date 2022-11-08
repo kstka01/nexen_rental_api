@@ -8,9 +8,11 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.Date;
-import java.util.function.Function;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -30,7 +32,7 @@ public class JwtTokenUtil {
 	// jwt access 토큰 생성
 	public String create(String id) {
 		
-		Date expireDate = Date.from(Instant.now().plus(1, ChronoUnit.SECONDS));
+		Date expireDate = Date.from(Instant.now().plus(1, ChronoUnit.DAYS));
 		
 		String subject = convertSerialize(id);
 		
@@ -148,4 +150,19 @@ public class JwtTokenUtil {
 		return convertData(claims.getSubject());
 	}
 
+    public String parseBearerToken(HttpServletRequest request) {
+		
+    	try {
+    		String bearerToken = request.getHeader("Authorization");
+    		
+    		if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
+    			return bearerToken.substring(7);
+    		}
+    	}catch (Exception e) {
+			// TODO: handle exception
+    		return null;
+		}
+		
+		return null;
+	}
 }
