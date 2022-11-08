@@ -1,4 +1,4 @@
-package com.nexentire.rental.util.compression;
+package com.nexentire.rental.util.comp;
 
 import java.io.File;
 import java.io.FileInputStream;
