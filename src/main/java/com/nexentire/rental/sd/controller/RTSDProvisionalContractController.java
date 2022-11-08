@@ -23,7 +23,7 @@ public class RTSDProvisionalContractController {
 	@Resource(name="rtsdProvisionalContractService")
 	private RTSDProvisionalContractService rtsdProvisionalContractService;
 	
-	@RequestMapping("/api/saveProvisionalData.do")
+	@RequestMapping("/v1/apis/api/vendor/416389/saveProvisionalData.do")
 	@ResponseBody
 	public String saveProvisionalData(@RequestBody Map<String, Object> requestData) {
 		

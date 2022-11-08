@@ -30,7 +30,7 @@
 			
 			$.ajax({
 				type: "POST",
-				url: "http://localhost:18080/api/authenticate.do",
+				url: "http://localhost:18080//v1/apis/api/admin/authenticate.do",
 				data: JSON.stringify(data),
 				headers:{
 		            "Content-Type": "application/json"
@@ -51,7 +51,7 @@
 			
 			$.ajax({
 				type: "POST",
-				url: "http://localhost:18080/api/incommingTest.do",
+				url: "http://localhost:18080/v1/apis/api/admin/incommingTest.do",
 				headers: {
 					"Content-Type": "application/json",
 					Authorization: "Bearer " + accessToken
