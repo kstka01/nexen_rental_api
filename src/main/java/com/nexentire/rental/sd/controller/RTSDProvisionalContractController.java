@@ -23,10 +23,6 @@ public class RTSDProvisionalContractController {
 	@Resource(name="rtsdProvisionalContractService")
 	private RTSDProvisionalContractService rtsdProvisionalContractService;
 	
-	public RTSDProvisionalContractController() {
-		// TODO Auto-generated constructor stub
-	}
-	
 	@RequestMapping("/api/saveProvisionalData.do")
 	@ResponseBody
 	public String saveProvisionalData(@RequestBody Map<String, Object> requestData) {

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.nexentire.rental.cm.NexenConstants;
+import com.nexentire.rental.constants.NexenConstants;
 import com.nexentire.rental.re.service.RTREExportClosingService;
 import com.nexentire.rental.re.vo.RTREExportClosingVO;
 import com.nexentire.rental.re.vo.RTREExportEnum.FileExtType;

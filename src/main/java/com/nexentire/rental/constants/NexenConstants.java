@@ -1,4 +1,4 @@
-package com.nexentire.rental.cm;
+package com.nexentire.rental.constants;
 
 public class NexenConstants {
 

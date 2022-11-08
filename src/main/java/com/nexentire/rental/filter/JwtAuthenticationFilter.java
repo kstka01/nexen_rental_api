@@ -1,4 +1,4 @@
-package com.nexentire.rental.util.jwt;
+package com.nexentire.rental.filter;
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import io.jsonwebtoken.ExpiredJwtException;
+import com.nexentire.rental.util.jwt.JwtTokenUtil;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {

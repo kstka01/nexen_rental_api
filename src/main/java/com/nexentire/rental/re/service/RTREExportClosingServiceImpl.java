@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.nexentire.rental.cm.NexenConstants;
+import com.nexentire.rental.constants.NexenConstants;
 import com.nexentire.rental.exception.NexenUserDefineException;
 import com.nexentire.rental.re.dao.RTREExportClosingDAO;
 import com.nexentire.rental.re.vo.RTREExportClosingVO;

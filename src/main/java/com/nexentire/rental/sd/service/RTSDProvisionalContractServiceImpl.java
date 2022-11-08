@@ -4,22 +4,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import com.nexentire.rental.exception.NexenServiceException;
 import com.nexentire.rental.sd.dao.RTSDProvisionalContractDAO;
 import com.nexentire.rental.sd.vo.RTSDProvisionalContractVO;
 
-@Service
+@Repository("rtsdProvisionalContractService")
 public class RTSDProvisionalContractServiceImpl implements RTSDProvisionalContractService {
 
 	@Autowired
 	RTSDProvisionalContractDAO rtsdProvisionalContractDAO;
 	
-	public RTSDProvisionalContractServiceImpl() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public void saveProvisionalData(RTSDProvisionalContractVO vo) throws NexenServiceException {
 		// TODO Auto-generated method stub

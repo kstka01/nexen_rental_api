@@ -1,4 +1,4 @@
-package com.nexentire.rental.cm;
+package com.nexentire.rental.cm.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +21,7 @@ public class JwtController {
 
 	Logger logger = LoggerFactory.getLogger(JwtController.class);
 	
-	@RequestMapping("/api/authenticate.do")
+	@RequestMapping("/v1/apis/api/admin/authenticate.do")
 	@ResponseBody
 	public String createJWT(HttpServletRequest req, @RequestBody Map<String, Object> requestData) {
 		
@@ -66,7 +66,7 @@ public class JwtController {
 		return String.valueOf(resultJson);
 	}
 
-	@RequestMapping("/api/confirmAuthenticate.do")
+	@RequestMapping("/v1/apis/api/admin/confirmAuthenticate.do")
 	@ResponseBody
 	public String confirmJWT(HttpServletRequest req, @RequestHeader Map<String, Object> requestHeader, @RequestBody Map<String, Object> requestData) {
 		
